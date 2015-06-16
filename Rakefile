@@ -1,4 +1,4 @@
-task :default => [:"extract:pages", :"extract:languages", :"extract:redirects", :"extract:categories", :"extract:templates", :"extract:offsets"]
+task :default => [:"extract:pages", :"extract:languages", :"extract:redirects", :"extract:categories", :"extract:templates", :"extract:offsets", :"extract:disambiguation"]
 
 desc "Compile content offset computer"
 task :compile do

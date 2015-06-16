@@ -25,7 +25,7 @@ rescue Slop::MissingOptionError => ex
 end
 
 disambiguation = YAML.load_file(options[:config])[:disambiguation]
-matcher = /#{disambiguation}/
+matcher = /#{disambiguation}/i
 pages = Set.new
 CSV.open(options[:templates],"r:utf-8") do |input|
   input.with_progress do |id,*templates|
