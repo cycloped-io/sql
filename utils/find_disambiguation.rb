@@ -27,7 +27,7 @@ end
 disambiguation = YAML.load_file(options[:config])[:disambiguation]
 matcher = /#{disambiguation}/
 pages = Set.new
-CSV.open(options[:templates]) do |input|
+CSV.open(options[:templates],"r:utf-8") do |input|
   input.with_progress do |id,*templates|
     if templates.any?{|t| t =~ matcher}
       pages << id
@@ -36,7 +36,7 @@ CSV.open(options[:templates]) do |input|
 end
 
 CSV.open(options[:input]+".new","w") do |output|
-  CSV.open(options[:input]) do |input|
+  CSV.open(options[:input],"r:utf-8") do |input|
     input.with_progress do |id,title,type,zero,length|
       if pages.include?(id) and type == '0'
         type = '3'

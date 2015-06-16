@@ -61,7 +61,7 @@ puts "Merging"
 last_article = nil
 last_type = nil
 last_ids = []
-CSV.open("#{path}.sorted") do |input|
+CSV.open("#{path}.sorted","r:utf-8") do |input|
   CSV.open("#{path}.merged","w") do |output|
     input.each do |article,type,redirect_id|
       if article == last_article

@@ -55,7 +55,7 @@ file_names.each do |name|
   last_id = nil
   last_targets = []
   puts "Merging"
-  CSV.open("#{path}.sorted") do |input|
+  CSV.open("#{path}.sorted","r:utf-8") do |input|
     CSV.open("#{path}.merged","w") do |output|
       input.each do |id,target|
         if id == last_id

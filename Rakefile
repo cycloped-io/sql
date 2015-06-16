@@ -9,7 +9,9 @@ end
 
 namespace :extract do
   def extract(script,source_name,target_name,path,config)
-    `gzip -c -d #{path}/#{source_name}.sql.gz > #{path}/#{source_name}.sql`
+    unless File.exist?("#{path}/#{source_name}.sql")
+      `gzip -c -d #{path}/#{source_name}.sql.gz > #{path}/#{source_name}.sql`
+    end
     puts `ruby ./utils/#{script}.rb -f #{path}/#{source_name}.sql -o #{path}/#{target_name}.csv -c #{config}`
     `rm #{path}/#{source_name}.sql`
   end
