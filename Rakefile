@@ -1,4 +1,5 @@
-task :default => [:"extract:pages", :"extract:languages", :"extract:redirects", :"extract:categories", :"extract:templates", :"extract:offsets", :"extract:disambiguation"]
+task :default => [:"extract:pages", :"extract:languages", :"extract:redirects", :"extract:categories", 
+		  :"extract:templates", :"extract:offsets", :"extract:disambiguation","extract:links"]
 
 desc "Compile content offset computer"
 task :compile do
@@ -58,6 +59,14 @@ namespace :extract do
   desc "Extract templates"
   task :templates do
     extract("convert_templates","templatelinks","templates",path,config)
+  end
+
+  desc "Extract links"
+  task :links do
+    file_name = "pagelinks"
+    `gzip -c -d #{path}/#{file_name}.sql.gz > #{path}/#{file_name}.sql`
+    puts `ruby ./utils/convert_links.rb -f #{path}/#{file_name}.sql -t #{path}/linkByTarget.csv -s #{path}/linkBySource.csv`
+    `rm #{path}/#{file_name}.sql`
   end
 
   desc "Extract page offsets"

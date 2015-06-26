@@ -21,6 +21,7 @@ visible on Wikipedia by regular users.
 * `convert_templates.rb` - used to extract article template inclusions
 * `convert_redirects.rb` - used to extract redirection links for articles and
   categories
+* `convert_links.rb` - used to extract links between articles
 * `parse_sql.rb` - test script for SQL parsing
 * `content_offset.rl` - source code for offset computation in XML dump
   (implemented in C for fast execution)
@@ -81,6 +82,12 @@ processing.
 * `templates.csv`
   * `page_id` - the id of the page
   * rest - titles of the included templates
+* `linkBySource.csv`
+  * `source_id` - the Wikipedia id of the source page of the links
+  * rest - the names of Wikipedia articles linked from the source page
+* `linkByTarget.csv`
+  * `target_name` - the name of the target article of the links
+  * rest - the Wikipedia ids of the articles linking to the target page
 
 ## Data 
 
