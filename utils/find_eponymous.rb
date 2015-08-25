@@ -26,4 +26,5 @@ rescue Slop::MissingOptionError => ex
 end
 
 eponymy = YAML.load_file(options[:config])[:eponymy]
-`grep '#{eponymy}' #{options[:templates]} | cut -d , -F 1 > #{options[:output]}`
+`grep -E '#{eponymy}' #{options[:templates]} | cut -d , -f 1 > #{options[:output]}`
+puts "Done searching of eponymous categories"
