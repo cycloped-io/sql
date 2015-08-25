@@ -26,18 +26,4 @@ rescue Slop::MissingOptionError => ex
 end
 
 eponymy = YAML.load_file(options[:config])[:eponymy]
-matcher = /#{eponymy}/i
-pages = Set.new
-CSV.open(options[:templates],"r:utf-8") do |input|
-  input.with_progress do |id,*templates|
-    if templates.any?{|t| t =~ matcher}
-      pages << id
-    end
-  end
-end
-
-CSV.open(options[:input],"w") do |output|
-  pages.each.with_progress do |id|
-    output << [id]
-  end
-end
+`grep '#{eponymy}' #{options[:templates]} | cut -d , -F 1 > #{options[:output]}`
