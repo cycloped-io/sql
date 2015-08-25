@@ -10,10 +10,10 @@ require 'progress'
 
 options = Slop.new do
   banner "#{$PROGRAM_NAME} -f file.sql -o output.csv [-c config.en.yml]\n" +
-    "Mark disambiguation articles by inspecting template inclusion."
+    "Find eponymous links by inspecting template inclusion."
 
-  on :f=, :input, "File with pages (CSV)", required: true
   on :t=, :templates, "File with template inclusion (CSV)", required: true
+  on :o=, :output, "File with ids Wikipedia categories including the template", required: true
   on :c=, :config, "YAML file with language specific config", required: true
 end
 
@@ -25,8 +25,8 @@ rescue Slop::MissingOptionError => ex
   exit
 end
 
-disambiguation = YAML.load_file(options[:config])[:disambiguation]
-matcher = /#{disambiguation}/i
+eponymy = YAML.load_file(options[:config])[:eponymy]
+matcher = /#{eponymy}/i
 pages = Set.new
 CSV.open(options[:templates],"r:utf-8") do |input|
   input.with_progress do |id,*templates|
@@ -36,16 +36,8 @@ CSV.open(options[:templates],"r:utf-8") do |input|
   end
 end
 
-CSV.open(options[:input]+".new","w") do |output|
-  CSV.open(options[:input],"r:utf-8") do |input|
-    input.with_progress do |id,title,type,zero,length|
-      if pages.include?(id) and type == '0'
-        type = '3'
-      end
-      output << [id,title,type,zero,length]
-    end
+CSV.open(options[:input],"w") do |output|
+  pages.each.with_progress do |id|
+    output << [id]
   end
 end
-
-File.delete(options[:input])
-File.rename(options[:input]+".new",options[:input])
