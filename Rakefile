@@ -1,5 +1,7 @@
-task :default => [:"extract:pages", :"extract:languages", :"extract:redirects", :"extract:categories", 
-		  :"extract:templates", :"extract:offsets", :"extract:disambiguation","extract:links"]
+task :default => [:"extract:pages", :"extract:languages", :"extract:redirects", :"extract:categories",
+		  :"extract:templates", :"extract:offsets", :"extract:disambiguation","extract:links",
+                  :"extract:eponymy"
+]
 
 desc "Compile content offset computer"
 task :compile do
@@ -79,5 +81,10 @@ namespace :extract do
   desc "Extract disambiguation pages"
   task :disambiguation do
     puts `./utils/find_disambiguation.rb -f #{path}/page.csv -t #{path}/templates.csv -c #{config}`
+  end
+
+  desc "Extract eponymous links"
+  task :eponymy do
+    puts `./utils/find_eponymous.rb -o #{path}/eponymous_from_templates.csv -t #{path}/templates.csv -c #{config}`
   end
 end
