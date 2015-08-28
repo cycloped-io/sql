@@ -87,4 +87,9 @@ namespace :extract do
   task :eponymy do
     puts `./utils/find_eponymous.rb -o #{path}/eponymous_from_templates.csv -t #{path}/templates.csv -c #{config}`
   end
+
+  desc "Extract infobox inclusion"
+  task :infoboxes do
+    puts `./utils/extract_infoboxes.rb -o #{path}/infoboxes.csv -t #{path}/templates.csv`
+  end
 end
