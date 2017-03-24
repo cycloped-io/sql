@@ -34,16 +34,19 @@ namespace :extract do
   end
   desc "Extract pages"
   task :pages do
+    puts "Extracting pages"
     extract("convert_pages","page","page",path,config)
   end
 
   desc "Extract language links"
   task :languages do
+    puts "Extracting languages"
     extract("convert_langlinks","langlinks","translations",path,config)
   end
 
   desc "Extract redirects"
   task :redirects do
+    puts "Extracting redirects"
     file_name = "redirect"
     `gzip -c -d #{path}/#{file_name}.sql.gz > #{path}/#{file_name}.sql`
     puts `ruby ./utils/convert_redirects.rb -f #{path}/#{file_name}.sql -t #{path}/redirectTargetsBySource.csv -s #{path}/redirectSourcesByTarget.csv`
@@ -52,6 +55,7 @@ namespace :extract do
 
   desc "Extract category links"
   task :categories do
+    puts "Extracting category links"
     file_name = "categorylinks"
     `gzip -c -d #{path}/#{file_name}.sql.gz > #{path}/#{file_name}.sql`
     puts `ruby ./utils/convert_category_links.rb -f #{path}/#{file_name}.sql -o #{path}/`
@@ -60,11 +64,13 @@ namespace :extract do
 
   desc "Extract templates"
   task :templates do
+    puts "Extracting templates"
     extract("convert_templates","templatelinks","templates",path,config)
   end
 
   desc "Extract links"
   task :links do
+    puts "Extracting links"
     file_name = "pagelinks"
     `gzip -c -d #{path}/#{file_name}.sql.gz > #{path}/#{file_name}.sql`
     puts `ruby ./utils/convert_links.rb -f #{path}/#{file_name}.sql -t #{path}/linkByTarget.csv -s #{path}/linkBySource.csv`
@@ -73,6 +79,7 @@ namespace :extract do
 
   desc "Extract page offsets"
   task :offsets do
+    puts "Extracting offsets"
     file_name = "pages-articles"
     `bzip2 -d #{path}/#{file_name}.xml.bz2` if File.exist?("#{path}/#{file_name}.xml.bz2")
     puts `./utils/content_offset #{path}/#{file_name}.xml > #{path}/offsets.csv`
@@ -80,16 +87,19 @@ namespace :extract do
 
   desc "Extract disambiguation pages"
   task :disambiguation do
+    puts "Extracting disambiguation pages"
     puts `./utils/find_disambiguation.rb -f #{path}/page.csv -t #{path}/templates.csv -c #{config}`
   end
 
   desc "Extract eponymous links"
   task :eponymy do
+    puts "Extracting eponymous links"
     puts `./utils/find_eponymous.rb -o #{path}/eponymous_from_templates.csv -t #{path}/templates.csv -c #{config}`
   end
 
   desc "Extract infobox inclusion"
   task :infoboxes do
+    puts "Extracting infobox inclusion"
     puts `./utils/extract_infoboxes.rb -o #{path}/infoboxes.csv -t #{path}/templates.csv`
   end
 end
