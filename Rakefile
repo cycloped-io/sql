@@ -81,7 +81,9 @@ namespace :extract do
   task :offsets do
     puts "Extracting offsets"
     file_name = "pages-articles"
-    `bzip2 -d #{path}/#{file_name}.xml.bz2` if File.exist?("#{path}/#{file_name}.xml.bz2")
+    puts "Decompressing pages-articles. Makre sure lbzip2 is installed."
+    `lbzip2 -d #{path}/#{file_name}.xml.bz2` if File.exist?("#{path}/#{file_name}.xml.bz2")
+    puts "Extracting offsets"
     puts `./utils/content_offset #{path}/#{file_name}.xml > #{path}/offsets.csv`
   end
 
