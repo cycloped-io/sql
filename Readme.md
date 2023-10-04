@@ -9,21 +9,6 @@ is much easier to use the specialized SQL files. They contain the data used
 by real Wikipedia instance, so are most similar to the data found in articles
 visible on Wikipedia by regular users.
 
-### Download
-
-`utils/download.rb` is used to automatically download necessary dumps of
-Wikipedia files. It check the checksums of files, so in case of problems it
-reports it back to the user.
-
-You can also run the task by issuing a `rake` task:
-
-```bash
-wiki$ export WIKI_DATA=/path/to/data 
-wiki$ export WIKI_DB=/path/to/db 
-wiki$ export WIKI_LANG=ja
-wiki$ rake download
-```
-
 ## Scripts
 
 * `convert_pages.rb` - used to extract data from pages.sql. This is the primary
@@ -40,6 +25,22 @@ wiki$ rake download
 * `parse_sql.rb` - test script for SQL parsing
 * `content_offset.rl` - source code for offset computation in XML dump
   (implemented in C for fast execution)
+
+### Download
+
+`utils/download.rb` is used to automatically download necessary dumps of
+Wikipedia files. It check the checksums of files, so in case of problems it
+reports it back to the user.
+
+You can also run the task by issuing a `rake` task:
+
+```bash
+wiki$ export WIKI_DATA=/path/to/data 
+wiki$ export WIKI_DB=/path/to/db 
+wiki$ export WIKI_LANG=ja
+wiki$ rake download
+```
+
 
 ### Ragel
 
@@ -109,3 +110,16 @@ processing.
 Files in `data` dir:
 
 * `sample-insert.sql` - sample file used to create and test the parser
+
+## Docker
+
+The scripts might be run with Docker and `docker compose`.
+
+The service starts an infinite loop, so to run some rake task you have to do:
+```
+docker compose up
+# in separate window
+docker exec sql-sql-1 bundle exec rake download
+```
+
+By changing docker-compose environment variables, you can control the location of the data and the language.

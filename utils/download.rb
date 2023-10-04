@@ -58,7 +58,7 @@ def download(url,path)
   File.open(path,"w") do |output|
     Net::HTTP.start(uri.host,uri.port, use_ssl: true) do |http|
       response = http.head(uri.path)
-      Progress.start(response['content-length'].to_i)
+      Progress.start(path, response['content-length'].to_i)
       http.get(uri.path) do |chunk|
         output.write(chunk)
         Progress.step(chunk.size)
