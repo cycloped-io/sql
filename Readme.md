@@ -9,6 +9,21 @@ is much easier to use the specialized SQL files. They contain the data used
 by real Wikipedia instance, so are most similar to the data found in articles
 visible on Wikipedia by regular users.
 
+### Download
+
+`utils/download.rb` is used to automatically download necessary dumps of
+Wikipedia files. It check the checksums of files, so in case of problems it
+reports it back to the user.
+
+You can also run the task by issuing a `rake` task:
+
+```bash
+wiki$ export WIKI_DATA=/path/to/data 
+wiki$ export WIKI_DB=/path/to/db 
+wiki$ export WIKI_LANG=ja
+wiki$ rake download
+```
+
 ## Scripts
 
 * `convert_pages.rb` - used to extract data from pages.sql. This is the primary
@@ -28,7 +43,7 @@ visible on Wikipedia by regular users.
 
 ### Ragel
 
-You need to compite the `content_offset` computation script,
+You need to compile the `content_offset` computation script,
 since it is written in C. To do that you need `ragel`
 
 ```

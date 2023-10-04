@@ -6,6 +6,7 @@ PATH
 GEM
   remote: http://rubygems.org/
   specs:
+    colors (0.0.7)
     progress (3.3.1)
     rake (10.3.2)
     slop (3.5.0)
@@ -15,6 +16,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  colors
   cyclopedio-sql!
   progress
   rake

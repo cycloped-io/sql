@@ -1,7 +1,23 @@
-task :default => [:"extract:pages", :"extract:languages", :"extract:redirects", :"extract:categories",
+task :default => [:download, :"extract:pages", :"extract:languages", :"extract:redirects", :"extract:categories",
 		  :"extract:templates", :"extract:offsets", :"extract:disambiguation","extract:links",
                   :"extract:eponymy"
 ]
+
+wikipedia_path = ENV['WIKI_DATA']
+db = ENV['WIKI_DB']
+lang = ENV['WIKI_LANG']
+if wikipedia_path.nil?
+  puts "WIKI_DATA has to be set"
+  exit
+end
+if db.nil?
+  puts "WIKI_DB has to be set"
+  exit
+end
+if lang.nil?
+  puts "Language not specified, assuming English (en)"
+  lang = "en"
+end
 
 desc "Compile content offset computer"
 task :compile do
@@ -9,6 +25,10 @@ task :compile do
   `g++ -o utils/content_offset utils/content_offset.c`
 end
 
+desc "Download dumps"
+task :download do
+  puts `./utils/download.rb -w #{wikipedia_path} -l #{lang}`
+end
 
 namespace :extract do
   def extract(script,source_name,target_name,path,config)
@@ -28,10 +48,10 @@ namespace :extract do
     exit
   end
   config = ENV['WIKI_CONFIG']
-  if config.nil?
-    puts "WIKI_CONFIG has to be set"
-    exit
-  end
+#  if config.nil?
+#    puts "WIKI_CONFIG has to be set"
+#    exit
+#  end
   desc "Extract pages"
   task :pages do
     puts "Extracting pages"

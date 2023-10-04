@@ -1,0 +1,13 @@
+version: '3.5'
+services:
+  sql:
+    build:
+      context: ./
+    command: "sleep infinity"
+    volumes:
+      - ./data-pl:/data
+      - ./rod-pl:/rod
+    environment:
+      - WIKI_DATA=/data
+      - WIKI_DB=/rod
+      - WIKI_LANG=pl

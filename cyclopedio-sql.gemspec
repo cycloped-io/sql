@@ -11,7 +11,11 @@ Gem::Specification.new do |s|
 
   s.rubyforge_project = "cyclopedio-sql"
 
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  if(system("git"))
+    s.files         = `git ls-files`.split("\n")
+    s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  else
+    s.files         = `find .`.split("\n")
+  end
   s.require_paths = ["lib"]
 end
