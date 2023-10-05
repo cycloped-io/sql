@@ -21,8 +21,10 @@ end
 
 desc "Compile content offset computer"
 task :compile do
-  `ragel utils/content_offset.rl`
-  `g++ -o utils/content_offset utils/content_offset.c`
+  puts "Generating offset parser from Ragel"
+  puts `ragel utils/content_offset.rl`
+  puts "Compiling offset parser"
+  puts `g++ -o utils/content_offset utils/content_offset.c`
 end
 
 desc "Download dumps"

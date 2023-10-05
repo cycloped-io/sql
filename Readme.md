@@ -119,7 +119,10 @@ The service starts an infinite loop, so to run some rake task you have to do:
 ```
 docker compose up
 # in separate window
-docker exec sql-sql-1 bundle exec rake download
+docker exec cyclopedio-sql bundle exec rake compile
+docker exec cyclopedio-sql bundle exec rake download
+docker exec cyclopedio-sql bundle exec rake extract:offsets
+# ...
 ```
 
 By changing docker-compose environment variables, you can control the location of the data and the language.

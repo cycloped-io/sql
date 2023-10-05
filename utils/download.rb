@@ -81,8 +81,6 @@ checksums_path = File.join(data_path,checksums_file)
 files.delete(checksums_file)
 download(wiki_url(url,checksums_file,lang,date),checksums_path)
 lines = File.readlines(checksums_path)
-puts "Contents of MD5SUMS:"
-puts lines
 checksums = Hash[lines.map{|l| l.split(" ").reverse}]
 main_article_file = "pages-articles.xml.bz2"
 

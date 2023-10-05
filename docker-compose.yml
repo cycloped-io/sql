@@ -1,13 +1,29 @@
 version: '3.5'
 services:
   sql:
+    container_name: cyclopedio-sql
     build:
       context: ./
     command: "sleep infinity"
     volumes:
-      - ./data-pl:/data
-      - ./rod-pl:/rod
+      - ../data/pl/data:/data
+      - ../data/pl/rod:/rod
     environment:
       - WIKI_DATA=/data
       - WIKI_DB=/rod
       - WIKI_LANG=pl
+  wikiextract:
+    container_name: cyclopedio-wikiextract
+    build:
+      context: ../wikiextract
+    command: "sleep infinity"
+    volumes:
+      - ../data/pl:/data
+      - ../rod/pl:/rod
+    environment:
+      - WIKI_DATA=/data
+      - WIKI_DB=/rod
+      - WIKI_LANG=pl
+networks:
+  default:
+    name: cyclopedio-network
