@@ -35,6 +35,7 @@ end
 namespace :extract do
   def extract(script,source_name,target_name,path,config)
     unless File.exist?("#{path}/#{source_name}.sql")
+      puts "Uncomressing #{path}/#{source_name}.sql.gz"
       `gzip -c -d #{path}/#{source_name}.sql.gz > #{path}/#{source_name}.sql`
     end
     puts `ruby ./utils/#{script}.rb -f #{path}/#{source_name}.sql -o #{path}/#{target_name}.csv -c #{config}`
@@ -50,10 +51,10 @@ namespace :extract do
     exit
   end
   config = ENV['WIKI_CONFIG']
-#  if config.nil?
-#    puts "WIKI_CONFIG has to be set"
-#    exit
-#  end
+  if config.nil?
+    puts "WIKI_CONFIG has to be set"
+    exit
+  end
   desc "Extract pages"
   task :pages do
     puts "Extracting pages"

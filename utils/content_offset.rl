@@ -6,6 +6,11 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+
+// This file contains the code which is used to index the content of full pages-articles.xml file.
+// It's an XML file with each Wikipedia article in one XML node. The node has an id, which indicates
+// the unique identifier of the article.
+
 %%{
   machine wikiparser;
 

@@ -3,7 +3,7 @@
 module Cyclopedio
   module SQL
     class SchemaParser
-      TYPES = %{int|varbinary|timestamp|enum|tinyblob|bigint|tinyint|double}
+      TYPES = %{int|varbinary|timestamp|enum|tinyblob|bigint|tinyint|double|binary}
       SCHEMA_REGEXP =
         /CREATE\sTABLE\s`(?<name>\w+)`\s*\(\s*
         (?<fields>(`\w+`\s(?:#{TYPES})(\([^)]*\))?[^,]*,\s*)+)
