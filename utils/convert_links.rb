@@ -27,12 +27,11 @@ begin
 
   Cyclopedio::SQL::Reader.new(input).each_tuple do |tuple|
     begin
-      next unless tuple[:pl_namespace] == '0'
       next unless tuple[:pl_from_namespace] == '0'
       source_id = tuple[:pl_from]
-      target_name = tuple[:pl_title].tr("_"," ")
-      by_source << [source_id,target_name]
-      by_target << [target_name,source_id]
+      target_id = tuple[:pl_target_id]
+      by_source << [source_id,target_id]
+      by_target << [target_id,source_id]
     rescue Interrupt
       puts
       break
@@ -55,13 +54,13 @@ last_id = nil
 targets = []
 CSV.open("#{path}.sorted","r:utf-8") do |input|
   CSV.open("#{path}.merged","w") do |output|
-    input.with_progress do |source_id,target_name|
+    input.with_progress do |source_id,target_id|
       if source_id != last_id
 	output << targets unless targets.size <= 1
 	targets = [source_id]
       end
       last_id = source_id
-      targets << target_name
+      targets << target_id
     end
     output << targets unless targets.size <= 1
   end
@@ -74,16 +73,16 @@ puts "Sorting by target"
 path = options[:by_target]
 `LC_ALL=C sort #{path} -T #{File.dirname(path)} --field-separator=, -k 1 > #{path}.sorted`
 puts "Merging"
-last_name = nil
+last_id = nil
 sources = []
 CSV.open("#{path}.sorted","r:utf-8") do |input|
   CSV.open("#{path}.merged","w") do |output|
-    input.with_progress do |target_name,source_id|
-      if target_name != last_name
+    input.with_progress do |target_id,source_id|
+      if target_id != last_id
 	output << sources unless sources.size <= 1
-	sources = [target_name]
+	sources = [target_id]
       end
-      last_name = target_name
+      last_id = target_id
       sources << source_id
     end
     output << sources unless sources.size <= 1

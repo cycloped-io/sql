@@ -91,7 +91,7 @@ namespace :extract do
     extract("convert_templates","templatelinks","templates",path,config)
   end
 
-  desc "Extract links"
+  desc "Extract article links"
   task :links do
     puts "Extracting links"
     file_name = "pagelinks"
